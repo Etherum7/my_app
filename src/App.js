@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Pallete from './Pallete';
+import { generatePallete } from './ColorHelpers';
 import SeedColors from "./SeedColors";
 
 
@@ -15,7 +16,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Pallete {...SeedColors[7]} />
+        <Pallete pallete={generatePallete(SeedColors[7])} />
         
       </div>
     )

@@ -1,17 +1,36 @@
 import React, { Component } from 'react'
 import ColorBox from './ColorBox';
-import {generatePallete} from './ColorHelpers';
-import SeedColors from './SeedColors'
+
+
 import './Pallete.css';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 class Pallete extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            level:500
+        };
+        this.handleSlider = this.handleSlider.bind(this);
+    }
+    handleSlider(newLevel){
+        this.setState({level:newLevel});
+    }
     render() {
-        console.log(generatePallete(SeedColors[4]));
-    const colorBoxes = this.props.colors.map(color => (
-    <ColorBox background ={color.color} name={color.name} />
+        const {level} = this.state;
+        const { colors } = this.props.pallete;
+        
+    const colorBoxes = colors[level].map(color => (
+    <ColorBox background ={color.hex} name={color.name} />
     )); 
         return (
-            
+           
             <div className="Pallete">
+                <Slider defaultValue={level}
+                    min={100}
+                    max={900}
+                    step={100}
+                    onAfterChange={this.handleSlider} />
                 {/* NavBar goes here */}
                 <div className='Pallete-colors'>
                     {colorBoxes}
