@@ -3,7 +3,6 @@ import {withStyles} from '@material-ui/core/styles';
 import {Link} from 'react-router-dom';
 import MiniPalette from './MiniPalette';
 import styles from './styles/PaletteListStyles';
-import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,24 +10,45 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import PersonIcon from '@material-ui/icons/Person';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
-import Typography from '@material-ui/core/Typography';
 import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
 import {CSSTransition,TransitionGroup} from 'react-transition-group';
 import  "./PaletteList.css";
 import uuid from 'uuid/v4';
 class PaletteList extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            openDeleteDialog: false,
+            deletingId:""
+        }
+        this.deleteDialog=this.deleteDialog.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
+        this.openDialog = this.openDialog.bind(this);
+    }
+    
+    closeDialog(){
+      this.setState({ openDeleteDialog:false,deletingId:""})
+    }
+    openDialog(id){
+      this.setState({ openDeleteDialog:true,deletingId:id})
+    }
+    deleteDialog() {
+      this.props.removePalette(this.state.deletingId);
+      this.setState({openDeleteDialog:false})
+    }
+    
     goToPalette(id){
      this.props.history.push(`/palette/${id}`);
     }
     render() {
         const { palettes, classes} = this.props;
-        const clas= 'body'+' '+ classes.root;
+        const {openDeleteDialog}= this.state;
+        const totalClass= 'body'+' '+ classes.root;
         return (
-            <div className={clas} >
+            <div className={totalClass}>
                
                 <div className={classes.container}>
                     <nav className={classes.nav}>
@@ -42,17 +62,17 @@ class PaletteList extends Component {
                            
                      {palettes.map(palette=> (
                          <CSSTransition key={palette.id} timeout={500} classNames='fade'>
-                             <MiniPalette removePalette={this.props.removePalette} {...palette} handleClick= {()=>this.goToPalette(palette.id)} key={uuid()} />
+                             <MiniPalette openDialog={this.openDialog} {...palette} handleClick= {()=>this.goToPalette(palette.id)} key={uuid()} />
                          </CSSTransition>
                    
                    ))}
                     </TransitionGroup>
                         
                   </div>
-                  <Dialog open={true} aria-labelledby='delete-this-dialog'>
+                  <Dialog open={openDeleteDialog} aria-labelledby='delete-this-dialog' onClose={this.closeDialog}>
                       <DialogTitle id='delete-this-dialog'>Delete this Palette?</DialogTitle>
                       <List>
-                          <ListItem button>
+                          <ListItem button onClick={this.deleteDialog} >
                               <ListItemAvatar >
                                   <Avatar style={{backgroundColor: blue[100],color: blue[600]}}>
                                        <CheckIcon />
@@ -61,7 +81,7 @@ class PaletteList extends Component {
                               </ListItemAvatar>
                               <ListItemText>Delete</ListItemText>
                           </ListItem>
-                          <ListItem button>
+                          <ListItem button onClick={this.closeDialog}>
                               <ListItemAvatar >
                                   <Avatar  style={{backgroundColor: red[100],color: red[600]}}>
                                   <CloseIcon />
