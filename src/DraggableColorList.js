@@ -11,6 +11,7 @@ const DraggableColorList= SortableContainer(({colors,removeColor})=> {
                     index={index}
                     color={color.color}
                     name={color.name}
+                    distance={20}
                     handleClick={() => removeColor(color.name)}
                 />
             )}

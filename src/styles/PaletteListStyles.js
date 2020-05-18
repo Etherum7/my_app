@@ -3,6 +3,7 @@ import sizes from './sizes';
 
 export default {
     "@global":{
+        
       '.fade-exit':{
           opacity:1
       },
