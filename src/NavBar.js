@@ -27,6 +27,7 @@ class NavBar extends Component {
     }
     render() {
         const {level,handleSlider,show,classes} = this.props;
+        const {format,open}=this.state;
        
         return (
             <header className={classes.NavBar}>
@@ -50,17 +51,17 @@ class NavBar extends Component {
 
                 </div> )}        
                 <div className={classes.SelectContainer}>
-                    <Select value={this.state.format} onChange ={this.handleChange}>
+                    <Select value={format} onChange ={this.handleChange}>
                            <MenuItem value='hex'>HEX -#ffffff</MenuItem>
                            <MenuItem value='rgb'>RGB -rgb(255,255,255)</MenuItem>
-                           {/* <MenuItem value='rgba'>RGBA -rgba(255,255,255,1.0)</MenuItem> */}
+                         
                     </Select>
                 </div>
 
                 <Snackbar anchorOrigin={{vertical:'bottom',horizontal:'left'}}
-                open={this.state.open}
+                open={open}
                 autoHideDuration={3000}
-        message={<span id='message-id'>"Format Changed to {this.state.format.toUpperCase()}"</span>}
+        message={<span id='message-id'>"Format Changed to {format.toUpperCase()}"</span>}
                 ContentProps={{
                     "aria-describedby":"message-id"
                 }} 

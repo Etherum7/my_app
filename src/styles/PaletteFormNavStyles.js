@@ -17,7 +17,6 @@ const styles = theme => ({
 			
             height: "54px"
 		},
-        //
     },
     appBarShift: {
         width: `calc(100% - ${drawerWidth}px)`,

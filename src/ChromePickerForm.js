@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import { ChromePicker } from 'react-color';
-import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import Button from '@material-ui/core/Button';
+
 const styles={
 picker:{
     width:"100% !important",
@@ -10,8 +11,6 @@ picker:{
 },
 addColor:{
     width:"100%",
-    // padding:"0.5rem",
-    // marginTop:"0.5rem",
     fontSize:"1rem" 
 },
 ColorNameInput:{
@@ -43,7 +42,7 @@ class ChromePickerForm extends Component {
 
         );
 
-        ValidatorForm.addValidationRule('isColorUnique', value =>
+        ValidatorForm.addValidationRule('isColorUnique', ()=>
             this.props.colors.every(
                 ({ color }) => color !== this.state.colorCurrent)
         );
@@ -67,21 +66,21 @@ class ChromePickerForm extends Component {
     }
     render() {
         const {paletteIsFull,classes} = this.props;
+        const {newColorName,colorCurrent}=this.state;
         return (
             <div>
                 <ChromePicker
-                    color={this.state.colorCurrent}
+                    color={colorCurrent}
                     onChangeComplete={newColor => this.updateColor(newColor)}
                     className={classes.picker}
                 />
                 <ValidatorForm onSubmit={this.handleSubmit} instantValidate={false}>
                     <TextValidator
                     className={classes.ColorNameInput}
-                        value={this.state.newColorName}
+                        value={newColorName}
                         name='newColorName'
                         placeholder='Color Name'
                         variant ='filled'
-                        //margin='normal'
                         onChange={this.handleChange}
                         validators={['required', 'isColorNameUnique', 'isColorUnique']}
                         errorMessages={['this field is required', 'ColorName should be unique', 'Color is already used']}

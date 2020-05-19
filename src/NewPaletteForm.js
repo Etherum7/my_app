@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import PaletteFormNav from './PaletteFormNav';
-import ChromePickerForm from './ChromePickerForm';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import DraggableColorList from './DraggableColorList';
 import Button from '@material-ui/core/Button';
 import arrayMove from 'array-move';
+import classNames from 'classnames';
+import PaletteFormNav from './PaletteFormNav';
+import ChromePickerForm from './ChromePickerForm';
+import DraggableColorList from './DraggableColorList';
+import SeedColors from './SeedColors';
 import styles from './styles/NewPaletteFormStyles'
 
 
@@ -23,7 +24,7 @@ class NewPaletteForm extends Component {
     this.state={
       open:true,
       
-    colors:this.props.allPalette[0].colors,
+    colors:SeedColors[0].colors,
     
     }
     this.randomColors = this.randomColors.bind(this);
@@ -74,14 +75,22 @@ class NewPaletteForm extends Component {
 
     }
     randomColors(){
-      const allColors= this.props.allPalette.map(p=>p.colors).flat();
-      const randomIndex= Math.floor(Math.random()*allColors.length);
-      this.setState({colors:[...this.state.colors,allColors[randomIndex]]})
+      const allColors= SeedColors.map(p=>p.colors).flat();
+      let randomIndex= Math.floor(Math.random()*allColors.length);
+      let randomColor = allColors[randomIndex];
+      let isDuplicateColor=true;
+      while(isDuplicateColor){
+           randomIndex= Math.floor(Math.random()*allColors.length);
+           randomColor = allColors[randomIndex];
+           // eslint-disable-next-line
+           isDuplicateColor= this.state.colors.some(color=>color.name===randomColor.name);   
+      }
+      this.setState({colors:[...this.state.colors,randomColor]})
       
     }
 
     render() {
-        const { classes,maxAllowedColors} = this.props;
+        const { classes,maxAllowedColors,allPalette} = this.props;
         const { open,colors } = this.state;
         const paletteIsFull = colors.length >= maxAllowedColors;
 
@@ -92,7 +101,7 @@ class NewPaletteForm extends Component {
                   open={open}
                   classes={classes}
                   handleSubmit={this.handleSubmit}
-                  allPalette={this.props.allPalette}
+                  allPalette={allPalette}
                />
                 <Drawer
                     className={classes.drawer}

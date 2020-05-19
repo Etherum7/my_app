@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
 class PaletteMetaForm extends Component {
-    constructor(props){
+    constructor(props){ 
         super(props);
         this.state={
             stage:'form',
@@ -44,18 +44,19 @@ class PaletteMetaForm extends Component {
         this.props.handleSubmit(newPalette);
     }
     render() {
-        const { newPaletteName } = this.state;
+        const { newPaletteName,stage } = this.state;
+        const {hideForm}=this.props;
         return (<div>
                <Dialog 
-               open={this.state.stage==='emoji'}
-               onClose={this.props.hideForm}
+               open={stage==='emoji'}
+               onClose={hideForm}
                 >
                 <DialogTitle id="form-dialog-title">Choose a Palette Emoji</DialogTitle>
                 <Picker title='Pick a Palette Emoji' onSelect={this.savePalette}/>
                </Dialog>
                 <Dialog
-                    open={this.state.stage==='form'}
-                    onClose={this.props.hideForm}
+                    open={stage==='form'}
+                    onClose={hideForm}
                     aria-labelledby="form-dialog-title"
                 >
                 <ValidatorForm onSubmit={this.showEmojiPicker}>
@@ -78,7 +79,7 @@ class PaletteMetaForm extends Component {
                     
                     </DialogContent>
                        <DialogActions>
-                        <Button onClick={this.props.hideForm} color="primary">
+                        <Button onClick={hideForm} color="primary">
                             Cancel
                          </Button>
                         <Button

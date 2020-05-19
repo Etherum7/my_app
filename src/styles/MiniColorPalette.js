@@ -14,8 +14,6 @@ export default  {
 
     },
     colors: {
-        // backgroundColor: "grey",
-        //   display:"grid",
         backgroundColor: "#dae1e4",
         height: "100px",
         width: "100%",
@@ -42,15 +40,13 @@ export default  {
         display: "inline-block",
         padding:"0px",
         margin: "0 auto",
-        marginBottom: "-5.2px",
+        marginBottom: "-7px",
         border: "none",
         position: "relative",
         boxSizing: "content-box"
 
     },
-    delete:{
-
-    },
+    
     deleteIcon:{
         color:"white",
         backgroundColor:"#ed3d30",

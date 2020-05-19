@@ -8,8 +8,6 @@ const styles = theme => ({
 			
             overflow: 'scroll'
 		},
-        
-
     },
 
     hide: {
@@ -17,7 +15,6 @@ const styles = theme => ({
     },
     drawer: {
         width: drawerWidth,
-        // height: "7%",
         flexShrink: 0,
     },
     drawerPaper: {
@@ -29,7 +26,6 @@ const styles = theme => ({
         display: 'flex',
         alignItems: 'center',
         padding: '0 8px',
-        // height:"7%",
         width:"100%",
         ...theme.mixins.toolbar,
         justifyContent: 'flex-end',
@@ -37,10 +33,6 @@ const styles = theme => ({
     content: {
         flexGrow: 1,
         height: "calc(100vh)",
-        // paddingTop: "4px",
-        // paddingLeft: "12px",
-        // paddingRight: "12px",
-        // paddingBottom: "1px",
         overflow: "hidden",
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
@@ -59,7 +51,6 @@ const styles = theme => ({
     container: {
         width: "90%",
         height: "calc(100vh-54px)",
-        // height:"100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

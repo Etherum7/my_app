@@ -6,9 +6,10 @@ export default {
 		height: (props) => (props.showFullPalette ? '25%' : '50%'),
 		display: 'inline-block',
 		cursor: 'pointer',
-		margin: '0 auto',
+		margin: '0  auto',
+		border:"none",
 		position: 'relative',
-		marginBottom: '-5px',
+		marginBottom: '-7px',
 		'&:hover button': {
 			opacity: '1',
 			transition: '0.5s'
@@ -73,6 +74,7 @@ export default {
 		left: '0px',
 		bottom: '0px',
 		padding: '5px',
+		
 		color: 'black',
 		letterSpacing: '1px',
 		textTransform: 'uppercase',

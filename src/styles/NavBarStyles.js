@@ -27,7 +27,6 @@ logo: {
 },
 
 SelectContainer :{
-    //display: 'flex',
     marginLeft: 'auto',
     marginRight: '1rem'
 }

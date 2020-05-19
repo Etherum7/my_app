@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import {Link} from 'react-router-dom';
-import MiniPalette from './MiniPalette';
-import styles from './styles/PaletteListStyles';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -14,9 +12,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
+import classNames from "classnames";
 import {CSSTransition,TransitionGroup} from 'react-transition-group';
+import MiniPalette from './MiniPalette';
+import styles from './styles/PaletteListStyles';
 import  "./PaletteList.css";
-import uuid from 'uuid/v4';
 class PaletteList extends Component {
     constructor(props){
         super(props);
@@ -27,6 +27,7 @@ class PaletteList extends Component {
         this.deleteDialog=this.deleteDialog.bind(this);
         this.closeDialog = this.closeDialog.bind(this);
         this.openDialog = this.openDialog.bind(this);
+        this.goToPalette = this.goToPalette.bind(this);
     }
     
     closeDialog(){
@@ -46,9 +47,11 @@ class PaletteList extends Component {
     render() {
         const { palettes, classes} = this.props;
         const {openDeleteDialog}= this.state;
-        const totalClass= 'body'+' '+ classes.root;
+        //const totalClass= 'body'+' '+ classes.root;
         return (
-            <div className={totalClass}>
+            <div className={classNames(classes.root, {
+                        "body": true,
+                    })}>
                
                 <div className={classes.container}>
                     <nav className={classes.nav}>
@@ -62,7 +65,12 @@ class PaletteList extends Component {
                            
                      {palettes.map(palette=> (
                          <CSSTransition key={palette.id} timeout={500} classNames='fade'>
-                             <MiniPalette openDialog={this.openDialog} {...palette} handleClick= {()=>this.goToPalette(palette.id)} key={uuid()} />
+                             <MiniPalette 
+                             openDialog={this.openDialog} 
+                             {...palette} 
+                             goToPalette= {this.goToPalette} 
+                             key={palette.id} 
+                             />
                          </CSSTransition>
                    
                    ))}
